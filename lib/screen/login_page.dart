@@ -51,14 +51,17 @@ class _LoginPageState extends State<LoginPage> {
             const SizedBox(height: 30.0),
             ElevatedButton(
               onPressed: () {
-                // 로그인 로직 추가
                 _loginButtonPressed();
               },
               style: ElevatedButton.styleFrom(
                 fixedSize: const Size(200, 50),
                 primary: Colors.blue[900],
                 onPrimary: Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8.0),
+                ),
               ),
+
               child: const Text(
                 '로그인',
                 style: TextStyle(fontSize: 18),
