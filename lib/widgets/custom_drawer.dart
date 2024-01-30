@@ -4,8 +4,8 @@ class CustomDrawer extends StatelessWidget {
   final List<Map<String, dynamic>> drawerItems = [
     {
       'title': '순천향대학교 공지사항',
-      'onTap': () {
-        // 각 화면 이동 로직
+      'onTap': (BuildContext context) {
+        Navigator.pushNamed(context, '/univnotice');
       },
     },
     {
@@ -72,7 +72,7 @@ class CustomDrawer extends StatelessWidget {
 
           return ListTile(
             title: Text(item['title']),
-            onTap: item['onTap'],
+            onTap: () => item['onTap'](context),
           );
         },
       ),

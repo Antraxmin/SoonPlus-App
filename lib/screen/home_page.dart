@@ -15,6 +15,8 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('SOON+'),
+        backgroundColor: Colors.blue[900],
+        foregroundColor: Colors.white,
       ),
       body: Center(
         child: Text('$_currentIndex 페이지'),
