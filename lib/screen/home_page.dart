@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../widgets/bottom_navigation_bar.dart';
+import '../widgets/custom_drawer.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -18,6 +19,7 @@ class _HomePageState extends State<HomePage> {
       body: Center(
         child: Text('$_currentIndex 페이지'),
       ),
+      drawer: CustomDrawer(),
       bottomNavigationBar: BottomNavigationBarWidget(
         currentIndex: _currentIndex,
         onTap: (index) {
