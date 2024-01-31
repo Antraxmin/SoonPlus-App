@@ -11,18 +11,21 @@ class CustomDrawer extends StatelessWidget {
     {
       'icon': Icons.info,
       'title': '부서별 연락처',
-      'onTap': () {
+      'onTap': (BuildContext context) {
+        Navigator.pushNamed(context, '/departmentcontact');
       },
     },
     {
       'title': '강의실/건물 찾기',
-      'onTap': () {
+      'onTap': (BuildContext context) {
+        Navigator.pushNamed(context, '/campusmap');
       },
     },
     {
       'icon': Icons.info,
       'title': '동아리',
-      'onTap': () {
+      'onTap': (BuildContext context) {
+        Navigator.pushNamed(context, '/club');
       },
     },
     {
