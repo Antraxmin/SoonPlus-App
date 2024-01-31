@@ -9,8 +9,9 @@ import 'package:soonplus_app/screen/student_council_page.dart';
 import 'package:soonplus_app/screen/transport_page.dart';
 import 'package:soonplus_app/screen/univ_notice_page.dart';
 import 'package:soonplus_app/screen/univ_place_page.dart';
+import 'package:sqflite/sqflite.dart';
 
-void main() {
+void main() async {
   runApp(MyApp());
 }
 
