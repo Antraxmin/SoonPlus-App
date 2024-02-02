@@ -32,7 +32,7 @@ class _ClubPageState extends State<ClubPage>
         backgroundColor: Colors.blue[900],
         foregroundColor: Colors.white,
         bottom: PreferredSize(
-          preferredSize: Size.fromHeight(48.0),
+          preferredSize: const Size.fromHeight(48.0),
           child: Container(
             color: Colors.white,
             child: Center(
@@ -42,7 +42,7 @@ class _ClubPageState extends State<ClubPage>
                 labelColor: Colors.blue[900],
                 unselectedLabelColor: Colors.black54,
                 isScrollable: true,
-                tabs: [
+                tabs: const [
                   Tab(text: "전체"),
                   Tab(text: "공연예술"),
                   Tab(text: "체육"),
@@ -94,7 +94,7 @@ class _ClubPageState extends State<ClubPage>
               borderRadius: BorderRadius.circular(8.0),
             ),
           ),
-        ],     
+        ],
       ),
     );
   }
