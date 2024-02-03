@@ -31,7 +31,6 @@ class _UnivNoticePageState extends State<UnivNoticePage> {
       final response = await http.get(
         Uri.parse(url),
       );
-      print(url);
 
       if (response.statusCode == 200) {
         final List<dynamic> responseData = json.decode(response.body);
@@ -153,10 +152,10 @@ class DepartmentDropdown extends StatelessWidget {
           value: 'dormitory',
           child: Text('SRC생활관'),
         ),
-        // DropdownMenuItem(
-        //   value: 'SW중심대학사업단',
-        //   child: Text('SW중심대학사업단'),
-        // ),
+        DropdownMenuItem(
+          value: 'software',
+          child: Text('SW중심대학사업단'),
+        ),
       ],
       onChanged: onChanged,
       decoration: const InputDecoration(
