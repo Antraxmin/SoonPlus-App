@@ -1,4 +1,10 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:http/http.dart' as http;
+import 'package:url_launcher/url_launcher.dart';
+
+final apiUrl = dotenv.env['API_URL'];
 
 class UnivNoticePage extends StatefulWidget {
   @override
@@ -6,26 +12,39 @@ class UnivNoticePage extends StatefulWidget {
 }
 
 class _UnivNoticePageState extends State<UnivNoticePage> {
-  List<String> noticeList = []; // 공지사항 목록를 저장할 리스트
+  List<Map<String, dynamic>> noticeList = [];
   String? selectedDepartment;
 
-  // 서버로부터 공지사항 리스트를 가져오는 함수
-  Future<List<String>> fetchNoticeList() async {
-    // 서버 통신 로직
+  Future<List<Map<String, dynamic>>> fetchNoticeList(String departmentId) async {
+    try {
+      final response = await http.get(
+        Uri.parse('$apiUrl/university-notices/010100'),
+      );
 
-    return Future.delayed(const Duration(seconds: 2), () {
-      return [
-        '공지사항 1',
-        '공지사항 2',
-        '공지사항 3',
-      ];
-    });
+      if (response.statusCode == 200) {
+        final List<dynamic> responseData = json.decode(response.body);
+        return responseData
+            .map((notice) => {
+          "title": notice["title"],
+          "date": notice["date"],
+          "author": notice["author"],
+          "link": notice["link"],
+        })
+            .toList();
+      } else {
+        throw Exception('Failed to load notice');
+      }
+    } catch (error) {
+      print(error);
+      throw Exception('An error occurred');
+    }
   }
+
 
   @override
   void initState() {
     super.initState();
-    fetchNoticeList().then((list) {
+    fetchNoticeList(selectedDepartment ?? '').then((list) {
       setState(() {
         noticeList = list;
       });
@@ -56,25 +75,43 @@ class _UnivNoticePageState extends State<UnivNoticePage> {
               },
             ),
           ),
+
           Expanded(
             child: noticeList.isEmpty
                 ? const Center(
               child: CircularProgressIndicator(),
             )
-                : ListView.builder(
+                : ListView.separated(
+              separatorBuilder: (context, index) => const Divider(), // 각 목록 사이에 구분선 추가
               itemCount: noticeList.length,
               itemBuilder: (context, index) {
                 return ListTile(
-                  title: Text(noticeList[index]),
+                  title: Text(noticeList[index]["title"]!),
+                  subtitle: Text(
+                    '작성자: ${noticeList[index]["author"]!}, 날짜: ${noticeList[index]["date"]!}',
+                  ),
+                  onTap: () {
+                    _launchURL(noticeList[index]["link"]!);
+                  },
                 );
               },
+
             ),
           ),
         ],
       ),
     );
   }
+
+  void _launchURL(String url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
 }
+
 
 class DepartmentDropdown extends StatelessWidget {
   final String? selectedDepartment;
@@ -119,3 +156,10 @@ class DepartmentDropdown extends StatelessWidget {
     );
   }
 }
+
+
+
+
+
+
+
