@@ -13,13 +13,25 @@ class UnivNoticePage extends StatefulWidget {
 
 class _UnivNoticePageState extends State<UnivNoticePage> {
   List<Map<String, dynamic>> noticeList = [];
-  String? selectedDepartment;
+  String? selectedDepartment = '010100';
+
+  @override
+  void initState() {
+    super.initState();
+    fetchNoticeList(selectedDepartment ?? '').then((list) {
+      setState(() {
+        noticeList = list;
+      });
+    });
+  }
 
   Future<List<Map<String, dynamic>>> fetchNoticeList(String departmentId) async {
     try {
+      final url = '$apiUrl/university-notices/$departmentId';
       final response = await http.get(
-        Uri.parse('$apiUrl/university-notices/010100'),
+        Uri.parse(url),
       );
+      print(url);
 
       if (response.statusCode == 200) {
         final List<dynamic> responseData = json.decode(response.body);
@@ -41,15 +53,7 @@ class _UnivNoticePageState extends State<UnivNoticePage> {
   }
 
 
-  @override
-  void initState() {
-    super.initState();
-    fetchNoticeList(selectedDepartment ?? '').then((list) {
-      setState(() {
-        noticeList = list;
-      });
-    });
-  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -71,6 +75,11 @@ class _UnivNoticePageState extends State<UnivNoticePage> {
               onChanged: (value) {
                 setState(() {
                   selectedDepartment = value;
+                });
+                fetchNoticeList(selectedDepartment ?? '').then((list) {
+                  setState(() {
+                    noticeList = list;
+                  });
                 });
               },
             ),
@@ -129,25 +138,25 @@ class DepartmentDropdown extends StatelessWidget {
       value: selectedDepartment,
       items: const [
         DropdownMenuItem(
-          value: '대학공지',
+          value: '010100',
           child: Text('대학공지'),
         ),
         DropdownMenuItem(
-          value: '학사공지',
+          value: '010200',
           child: Text('학사공지'),
         ),
         DropdownMenuItem(
-          value: '장학공지',
+          value: '010300',
           child: Text('장학공지'),
         ),
         DropdownMenuItem(
-          value: 'SRC생활관',
+          value: 'dormitory',
           child: Text('SRC생활관'),
         ),
-        DropdownMenuItem(
-          value: 'SW중심대학사업단',
-          child: Text('SW중심대학사업단'),
-        ),
+        // DropdownMenuItem(
+        //   value: 'SW중심대학사업단',
+        //   child: Text('SW중심대학사업단'),
+        // ),
       ],
       onChanged: onChanged,
       decoration: const InputDecoration(
