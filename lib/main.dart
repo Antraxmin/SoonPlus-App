@@ -11,17 +11,19 @@ import 'package:soonplus_app/screen/student_council_page.dart';
 import 'package:soonplus_app/screen/transport_page.dart';
 import 'package:soonplus_app/screen/univ_notice_page.dart';
 import 'package:soonplus_app/screen/univ_place_page.dart';
+import 'package:soonplus_app/widgets/naver_map.dart';
 
 void main() async {
-  // WidgetsFlutterBinding.ensureInitialized();
-  // await NaverMapSdk.instance.initialize(
-  //     clientId: '0yfksoatai',
-  //     onAuthFailed: (ex) {
-  //       print("********* 네이버맵 인증오류 : $ex *********");
-  //     });
   await dotenv.load(fileName: ".env");
+  final naverMapId = dotenv.env['NAVER_MAP_CLIENT_ID'];
+  WidgetsFlutterBinding.ensureInitialized();
+  await NaverMapSdk.instance.initialize(clientId: naverMapId);
   runApp(MyApp());
 }
+// void main() async {
+//   await dotenv.load(fileName: ".env");
+//   runApp(MyApp());
+// }
 
 class MyApp extends StatelessWidget {
   @override
@@ -34,7 +36,7 @@ class MyApp extends StatelessWidget {
         '/signup': (context) => SignupPage(),
         '/univnotice': (context) => UnivNoticePage(),
         '/departmentcontact' : (context) => DepartmentContactPage(),
-        '/campusmap' : (context) => CampusmapPage(),
+        '/campusmap' : (context) => CampusMapPage(),
         '/club' : (context) => ClubPage(),
         '/studentcouncil' : (context) => StudentCouncilPage(),
         '/univplace' : (context) => UnivPlacePage(),
