@@ -32,10 +32,12 @@ dependencies:
     sdk: flutter
   sqflite: ^2.3.2
   moor:
-  flutter_naver_map: ^1.1.2
+  flutter_naver_map: ^1.1.1
   http:
   url_launcher:
   flutter_dotenv:
+  naver_map_plugin:
+    git: https://github.com/LBSTECH/naver_map_plugin
 
 
   # The following adds the Cupertino Icons font to your application.
